@@ -17,8 +17,25 @@ io.on('connection', (socket) => {
     socket.on('createMessage', function (message) {
         console.log('create message: ', message);
         message.createdAt = new Date().getTime();
+
         io.emit('newMessage', {from: message.form, text: message.text, createdAt: message.createdAt})
+        // socket.broadcast.emit('newMessage', {
+        //     from: message.from,
+        //     text: message.text,
+        //     createdAt: new Date().getTime()
+        // })
     });
+
+    socket.emit('newMessage', {
+        from: 'admin',
+        text: 'welcome to the chat app'
+    });
+
+    socket.broadcast.emit('newMessage', {
+        from: 'admin',
+        text: 'New user joined',
+        createdAt: new Date().getTime()
+    })
 
     socket.on('disconnect', () => {
         console.log('User was disconnected');
