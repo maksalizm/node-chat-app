@@ -16,13 +16,8 @@ io.on('connection', (socket) => {
     console.log('New user connected');
     socket.on('createMessage', function (message) {
         console.log('create message: ', message);
-        message.createAt = new Date();
-    });
-
-    socket.emit('newMessage', {
-        form: 'JOHN',
-        text: 'See you then',
-        createdAt: new Date()
+        message.createdAt = new Date().getTime();
+        io.emit('newMessage', {from: message.form, text: message.text, createdAt: message.createdAt})
     });
 
     socket.on('disconnect', () => {
