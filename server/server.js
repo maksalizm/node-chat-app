@@ -20,7 +20,7 @@ io.on('connection', (socket) => {
         message.createdAt = new Date().getTime();
 
         io.emit('newMessage', generateMessage(message.from, message.text));
-        cb("tst");
+        cb();
     });
 
     socket.on('createLocationMessage', (coords) => {
