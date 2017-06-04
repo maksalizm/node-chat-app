@@ -21,12 +21,12 @@ io.on('connection', (socket) => {
         if (!isRealString(params.name) || !isRealString(params.room) && callback) {
             callback('Name and room name are required.');
         }
-        if (callback) {
-            callback();
-        }
         socket.join(params.room);
         socket.emit('newMessage', generateMessage('Admin', 'Welcome to the chat app'));
         socket.broadcast.to(params.room).emit('newMessage', generateMessage('Admin', `${params.name} has joined.`));
+        if (callback) {
+            callback();
+        }
     });
 
     socket.on('createMessage', (message, callback) => {
