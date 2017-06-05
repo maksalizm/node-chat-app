@@ -20,10 +20,15 @@ io.on('connection', (socket) => {
     console.log('New user connected');
 
     socket.on('join', (params, callback) => {
-
+        params.room = params.room.toUpperCase();
         if (!isRealString(params.name) || !isRealString(params.room) && callback) {
             return callback('Name and room name are required.');
         }
+
+        if (users.getUserList(params.room).filter((name) => name === params.name).length > 0 && callback) {
+            return callback('already exist name');
+        }
+
         socket.join(params.room);
         users.removeUser(socket.id);
         users.addUser(socket.id, params.name, params.room);
@@ -55,11 +60,12 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
         var user = users.removeUser(socket.id);
 
-        if (users) {
+        if (user) {
             io.to(user.room).emit('updateUserList', users.getUserList(user.room));
             io.to(user.room).emit('newMessage', generateMessage('Admin', `${user.name} has left room`));
         }
     });
+
 });
 
 server.listen(port, () => {
