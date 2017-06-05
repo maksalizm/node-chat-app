@@ -30,6 +30,9 @@ class Users {
         var namesArray = users.map((user) => user.name);
         return namesArray;
     }
+    getRoomList() {
+        return _.uniqBy(this.users, 'room');
+    }
 }
 
 module.exports = {Users};

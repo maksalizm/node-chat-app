@@ -19,6 +19,8 @@ app.use(express.static(publicPath));
 io.on('connection', (socket) => {
     console.log('New user connected');
 
+    socket.emit('getListRoom', users.getRoomList());
+
     socket.on('join', (params, callback) => {
         params.room = params.room.toUpperCase();
         if (!isRealString(params.name) || !isRealString(params.room) && callback) {
