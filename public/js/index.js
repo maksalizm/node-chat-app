@@ -7,6 +7,5 @@ socket.on('connect', function () {
         rooms.forEach((room) => {
             $('#roomList').append(`<li class="form-field">${room.room}</li>`)
         });
-        console.log(rooms);
     })
 });
