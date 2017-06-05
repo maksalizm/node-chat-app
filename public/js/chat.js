@@ -29,6 +29,10 @@ socket.on('connect', function () {
     });
 });
 
+socket.on('updateUserList', function () {
+
+});
+
 socket.on('disconnect', function () {
     console.log('Disconnected from server');
 });
@@ -71,6 +75,7 @@ $('#message-form').on('submit', function (e) {
         messageTextbox.val('')
     });
 });
+
 
 var locationButton = $('#send-location');
 locationButton.on('click', function () {
